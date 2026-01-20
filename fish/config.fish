@@ -8,7 +8,7 @@ if status is-interactive
         echo -n '@'
 
         set_color --bold yellow
-        echo -n 'linux'
+        echo -n linux
 
         set_color --bold white
         echo -n ':'
@@ -22,13 +22,15 @@ if status is-interactive
     set -Ux EDITOR hx
     fish_add_path $HOME/.local/bin
 
+    alias t='exec tmux'
     alias c='clear'
     alias e='exit'
-    alias t='tmux'
     alias y='yazi'
+    alias n='nvim'
 
-    alias get_idf='. $HOME/.local/opt/esp-idf/export.fish'
+    # alias get_idf='. $HOME/.local/opt/esp-idf/export.fish'
 
+    alias ls='eza --group-directories-first'
     alias l='eza -l --icons --group-directories-first'
     alias la='eza -la --icons --group-directories-first'
     alias lt='eza --tree --icons --group-directories-first'
