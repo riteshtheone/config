@@ -30,8 +30,7 @@ def main():
     file_path = Path(file)
     repo_path = Path(repo)
 
-    if not file_path.exists():
-        download_file(file, url)
+    download_file(file, url)
 
     with ZipFile(file_path) as z:
         z.extractall()
@@ -50,7 +49,7 @@ def main():
             print(f"{green}{p.name} {yellow}-> {green}{dest_path}{reset}")
 
     local_bin = home / ".local/bin"
-    local_bin.mkdir(exist_ok=True)
+    local_bin.mkdir(parents=True, exist_ok=True)
     (repo_path / "dist/pkgs").replace(local_bin / "pkgs")
     print(f"{green}pkgs {yellow}-> {green}{local_bin / "pkgs"}{reset}")
 
