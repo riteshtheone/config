@@ -39,7 +39,7 @@ def main():
         z.extractall(repo_path)
 
     print(f"Extracted {zip_path} -> {repo_path}")
-    zip_path.unlink()
+    # zip_path.unlink()
 
     config_path = repo_path / "config"
 
