@@ -2,4 +2,10 @@
 
 termux-change-repo
 pkg update && yes N | pkg upgrade -y
-curl -LO https://raw.githubusercontent.com/riteshtheone/config/refs/heads/main/setup.py
+
+curl -LO "https://raw.githubusercontent.com/riteshtheone/config/refs/heads/main/dist/setup"
+
+chmod +x setup
+./setup
+
+rm setup

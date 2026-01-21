@@ -1,0 +1,20 @@
+[[language]]
+name = "c"
+indent = { tab-width = 3, unit = "   " }
+
+[[language]]
+name = "cpp"
+indent = { tab-width = 3, unit = "   " }
+
+[[language]]
+name = "javascript"
+indent = { tab-width = 3, unit = "   " }
+
+[[language]]
+name = "html"
+indent = { tab-width = 3, unit = "   " }
+
+[[language]]
+name = "css"
+indent = { tab-width = 3, unit = "   " }
+
