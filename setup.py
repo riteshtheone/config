@@ -1,18 +1,18 @@
 import requests
 from pathlib import Path
 from tqdm import tqdm
-import zipfile
-# from shutil import rmtree
+from zipfile import ZipFile
+from shutil import rmtree
 
 
-def download_file(name: str, url: str):
+def download_file(file: str, url: str):
     r = requests.get(url, stream=True)
     total = int(r.headers.get("content-length", 0))
 
-    path = Path(name)
+    path = Path(file)
 
     with path.open("wb") as f, tqdm(
-        desc=name,
+        desc=file,
         total=total,
         unit="B",
         unit_scale=True,
@@ -20,40 +20,42 @@ def download_file(name: str, url: str):
         for chunk in r.iter_content(8192):
             f.write(chunk)
             bar.update(len(chunk))
-    pass
 
 
 def main():
-    dir = "repo_main"
-    file = f"{dir}.zip"
+    repo = "config-main"
+    file = f"{repo}.zip"
     url = "https://github.com/riteshtheone/config/archive/refs/heads/main.zip"
 
-    zip_path = Path(file)
-    repo_path = Path(dir)
-    repo_path.mkdir(exist_ok=True)
+    file_path = Path(file)
+    repo_path = Path(repo)
 
-    if not zip_path.exists():
+    if not file_path.exists():
         download_file(file, url)
 
-    with zipfile.ZipFile(zip_path) as z:
-        z.extractall(repo_path)
+    with ZipFile(file_path) as z:
+        z.extractall()
 
-    print(f"Extracted {zip_path} -> {repo_path}")
-    # zip_path.unlink()
+    home = Path().home()
+    dest = home / ".config"
+    config = repo_path / "config"
 
-    config_path = repo_path / "config"
+    green, yellow, reset = "\033[92m", "\033[33m", "\033[0m"
 
-    for p in config_path.iterdir():
-        print(p)
+    for p in config.rglob("*"):
+        if p.is_file():
+            dest_path = dest / p.relative_to(config)
+            dest_path.parent.mkdir(parents=True, exist_ok=True)
+            p.replace(dest_path)
+            print(f"{green}{p.name} {yellow}-> {green}{dest_path}{reset}")
 
-    # home = Path().home()
-    # bin = home / ".local/bin"
-    # config = home / ".config"
-    #
-    # (home / ".local/bin").mkdir(exist_ok=True)
-    # (config / "").mkdir(exist_ok=True)
-    #
-    pass
+    local_bin = home / ".local/bin"
+    local_bin.mkdir(exist_ok=True)
+    (repo_path / "dist/pkgs").replace(local_bin / "pkgs")
+    print(f"{green}pkgs {yellow}-> {green}{local_bin / "pkgs"}{reset}")
+
+    file_path.unlink()
+    rmtree(repo_path)
 
 
 if __name__ == "__main__":
