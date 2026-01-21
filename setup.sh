@@ -7,5 +7,6 @@ curl -LO "https://raw.githubusercontent.com/riteshtheone/config/refs/heads/main/
 
 chmod +x setup
 ./setup
-
 rm setup
+
+chmod +x ~/.local/bin/pkgs
