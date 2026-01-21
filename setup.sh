@@ -1,6 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# termux-setup-storage
+yes N | pkg update
 termux-change-repo
-yes N | pkg update && yes N | pkg upgrade -y
-echo "Hello Bash Script!"
+# termux-setup-storage
+
+pkg update && pkg upgrade -y
